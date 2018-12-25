@@ -7,7 +7,6 @@ public class BinaryHeapmin {
     public BinaryHeapmin(int n) {
         heap = new int[n + 1];
 
-
     }
 
     public void heapfy(int[] A, int i) {
@@ -59,7 +58,7 @@ public class BinaryHeapmin {
 
     public static void main(String[] args) {
         BinaryHeapmin br = new BinaryHeapmin(11);
-        br.heap = new int[]{3, 4, 5, 6, 7,9,2,1};
+        br.heap = new int[]{3, 5, 6, 7,9,2,1};
         br.insertHeap(15);
         br.build();
         br.print();
