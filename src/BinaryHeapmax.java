@@ -77,7 +77,7 @@ public class BinaryHeapmax implements Queue,max {
         br.add(20);
         br.add(41);
         br.build();
-        br.getMax();
+        br.max();
 
         br.print();
 
