@@ -63,6 +63,7 @@ public class BinaryHeapmax implements Queue,max {
 
     public void  delete(int i){
         list.remove(i);
+        build();
     }
 
 
@@ -76,8 +77,10 @@ public class BinaryHeapmax implements Queue,max {
         BinaryHeapmax br = new BinaryHeapmax(new int[]{9,2,3,5,6,7,11});
         br.add(20);
         br.add(41);
+        br.delete(2);
         br.build();
-        br.max();
+        System.out.println(br.min());
+
 
         br.print();
 
