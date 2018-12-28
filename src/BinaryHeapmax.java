@@ -1,104 +1,98 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class BinaryHeapmax implements Queue,max {
-    private List<Integer> reg;
-    private int[] heap;
-    private static final int d = 2;
-    int n;
+    private List<Integer> list;
+    public int heapsize;
 
-    public BinaryHeapmax(int n) {
-        this.n = n;
-        heap = new int[this.n + 1];
-
-
+    public BinaryHeapmax(int[] n) {
+        list = new ArrayList<>();
+        for(int i = 0; i < n.length; i++){
+            list.add(n[i]);
+        }
+        heapsize = list.size();
     }
 
-    public void heapfy(int[] A, int i) {
-        heap = A;
+    public void add(int value) {
+        list.add(value);
+        int i = this.heapsize - 1;
+        int parent = (i - 1) / 2;
+
+        while (i > 0 && list.get(parent) < list.get(i))
+        {
+            int temp = list.get(i);
+            list.set(i, list.get(parent));
+            list.set(parent, temp);
+
+            i = parent;
+            parent = (i - 1) / 2;
+        }
+    }
+
+    public void heapfy(int i) {
         int left = 2 * i + 1;
         int right = 2 * i + 2;
         int largest = i;
 
-        if (left < heap.length && heap[left] > heap[largest]) {
+        if (left < list.size() && list.get(left) > list.get(largest)) {
             largest = left;
         }
-        if (right < heap.length && heap[right] > heap[largest]) {
+        if (right < list.size() && list.get(right) > list.get(largest)) {
             largest = right;
         }
         if (largest != i) {
-            int t = heap[i];
-            heap[i] = heap[largest];
-            heap[largest] = t;
-            heapfy(heap, largest);
+            int t = list.get(i);
+            list.set(i, list.get(largest));
+            list.set(largest, t);
+            heapfy(largest);
         }
 
     }
 
     public void build() {
-        int size = heap.length ;
-        for (int i = (size- 1) / 2; i >= 0; i--){
-            heapfy(heap, i);
+        for (int i = (list.size()- 1) / 2; i >= 0; i--){
+            heapfy(i);
         }
     }
-
-    public int[] delete(int[] A,int n){
-        A = heap;
-        for(int i = 0; i < heap.length; i++){
-            if (A[i] == n) {
-            }
-            else heapfy(A,i);
-        }
-        for(int i = 0 ; i < A.length; i++){
-            System.out.println(A[i]);
-        }
-        return A;
-
+    public int getMax(){
+        int result = list.get(0);
+        list.set(0,heapsize - 1);
+        list.remove(heapsize - 1);
+        return result;
     }
 
-    public void increase(int[] A,int i,int key){
-        if (key <  A[i - 1]) throw new NoSuchElementException("ERROR");
-        A[i - 1] = key;
-        while(i > 1 && A[i/2 - 1] < A[i - 1]){
-            int t = A[i -1];
-            A[i - 1] = A[i/2 -1];
-            A[i/2 - 1] = t;
-            i = i / 2;
-        }
+    public void  delete(int i){
+        list.remove(i);
     }
 
-    public void insertHeap(int key){
-        heapfy(heap, key);
-    }
 
     public void print() {
-        for (int i = 0; i < heap.length; i++) {
-            System.out.println(heap[i] + " " + (i + 1));
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i) + " " + (i + 1));
         }
     }
 
     public static void main(String[] args) {
-        BinaryHeapmax br = new BinaryHeapmax(9);
-        br.heap = new int[]{3, 4, 5, 6, 7,9,2,1};
+        BinaryHeapmax br = new BinaryHeapmax(new int[]{9,2,3,5,6,7,11});
+        br.add(20);
+        br.add(41);
         br.build();
-        br.insertHeap(15);
-        br.insertHeap(31);
-        br.insertHeap(19);
-        System.out.println(br.max() + "\n");
-        System.out.println(br.min() + "\n");
+        br.getMax();
+
         br.print();
 
     }
 
     @Override
     public int max() {
-        return heap[0];
+        return list.get(0);
     }
 
     @Override
     public int min() {
-        int f = heap[0];
-        for(int i = 1; i < heap.length; i++) {
-            if (heap[i] < f) f = heap[i];
+        int f = list.get(0);
+        for(int i = 1; i < list.size(); i++) {
+            if (list.get(i) < f) f = list.get(i);
         }
 
         return f;
@@ -106,19 +100,19 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public int size() {
-        return heap.length;
+        return list.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return heap.length == 0;
+        return list.size() == 0;
     }
     //Если в массиве содержится элемент то true;
     @Override
     public boolean contains(Object o) {
         int a = (int) o;
-        for(int i = 0; i < heap.length; i++){
-            if (a == heap[i]) return true;
+        for(int i = 0; i < list.size(); i++){
+            if (a == list.get(i)) return true;
         }
         return false;
     }
@@ -140,18 +134,11 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public boolean add(Object o) {
-        int a = (int) o;
-        //Если в массиве есть место то мы можем добавить элемент
-        if (heap.length < this.n) return true;
-        return false;
+        return true;
     }
     // Если мы найдем в массиве элемент то true
     @Override
     public boolean remove(Object o) {
-        int a = (int) o;
-        for(int i = 0; i < heap.length; i++){
-            if (a == heap[i]) return true;
-        }
         return false;
     }
 
@@ -162,10 +149,6 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public void clear() {
-        for(int i = 0; i < heap.length; i++){
-            heap[i] = 0;
-        }
-
     }
 
     @Override
@@ -175,41 +158,23 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public boolean removeAll(Collection c) {
-        Object[] a = c.toArray();
-        if (n + a.length < heap.length) return false;
-        int f = 0;
-        for(int i = 0; i < c.size(); i ++){
-            if (heap[i] == (int) a[i]) f++;
-        }
-        if(f == a.length) return true;
+
         return false;
     }
 
     @Override
     public boolean containsAll(Collection c) {
-
-        Object[] a = c.toArray();
-        if (n + a.length < heap.length) return false;
-        int f = 0;
-        for(int i = 0; i < c.size(); i ++){
-            if (heap[i] == (int) a[i]) f++;
-        }
-        if(f == a.length) return true;
         return false;
     }
 
     @Override
     public boolean offer  (Object o) {
-        int a = (int) o;
-        for(int i = 0; i < heap.length; i++){
-            if (heap[i] == a) return true;
-        }
         return false;
     }
 
     @Override
     public Object remove() {
-        return heap[heap.length - 1];
+        return list.get(0);
     }
 
     @Override
