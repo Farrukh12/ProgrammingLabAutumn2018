@@ -127,12 +127,16 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] obj = new Object[list.size()];
+        int i = 0;
+        for (Object b: list)
+        obj[i++] = b;
+        return obj;
     }
 
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        return a;
     }
 
     @Override
@@ -161,7 +165,6 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public boolean removeAll(Collection c) {
-
         return false;
     }
 
