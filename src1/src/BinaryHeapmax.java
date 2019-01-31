@@ -1,7 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class BinaryHeapmax implements Queue,max {
+public class BinaryHeapmax implements Queue{
     private List<Integer> list;
     public int heapsize;
 
@@ -74,32 +74,12 @@ public class BinaryHeapmax implements Queue,max {
     }
 
     public static void main(String[] args) {
-        BinaryHeapmax br = new BinaryHeapmax(new int[]{9,2,3,5,6,7,11});
-        br.add(20);
-        br.add(41);
-        br.delete(2);
+        BinaryHeapmax br = new BinaryHeapmax(new int[]{41, 15, 16, 12, 13});
         br.build();
-        System.out.println(br.min());
-
-
         br.print();
 
     }
 
-    @Override
-    public int max() {
-        return list.get(0);
-    }
-
-    @Override
-    public int min() {
-        int f = list.get(0);
-        for(int i = 1; i < list.size(); i++) {
-            if (list.get(i) < f) f = list.get(i);
-        }
-
-        return f;
-    }
 
     @Override
     public int size() {
@@ -113,9 +93,8 @@ public class BinaryHeapmax implements Queue,max {
     //Если в массиве содержится элемент то true;
     @Override
     public boolean contains(Object o) {
-        int a = (int) o;
         for(int i = 0; i < list.size(); i++){
-            if (a == list.get(i)) return true;
+            if (o == list.get(i)) return true;
         }
         return false;
     }
@@ -130,7 +109,7 @@ public class BinaryHeapmax implements Queue,max {
         Object[] obj = new Object[list.size()];
         int i = 0;
         for (Object b: list)
-        obj[i++] = b;
+            obj[i++] = b;
         return obj;
     }
 
@@ -141,11 +120,16 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public boolean add(Object o) {
-        return true;
+        int size = list.size();
+        list.add((Integer) o);
+        if (list.size() != size) return true;
+        return false;
     }
-    // Если мы найдем в массиве элемент то true
     @Override
     public boolean remove(Object o) {
+        int size = list.size();
+        list.remove(o);
+        if (list.size() != size) return true;
         return false;
     }
 
@@ -156,6 +140,9 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public void clear() {
+        for(int i = 0; i < list.size(); i++){
+            list.remove(i);
+        }
     }
 
     @Override
@@ -175,26 +162,41 @@ public class BinaryHeapmax implements Queue,max {
 
     @Override
     public boolean offer  (Object o) {
+        int size = list.size();
+        list.add((Integer) o);
+        if (list.size() != size) return true;
         return false;
     }
 
     @Override
     public Object remove() {
-        return list.get(0);
+        Object c = list.get(0);
+        if (list.get(0) != null) {
+            list.remove(0);
+            return c;
+        }
+        else throw new NoSuchElementException();
     }
 
     @Override
     public Object poll() {
+        Object c = list.get(0);
+        if (list.get(0) != null) {
+            list.remove(0);
+            return c;
+        }
         return null;
     }
 
     @Override
     public Object element() {
-        return null;
+        if (list.get(0) != null) return list.get(0);
+        else throw new NoSuchElementException();
     }
 
     @Override
     public Object peek() {
+        if (list.get(0) != null) return list.get(0);
         return null;
     }
 }
