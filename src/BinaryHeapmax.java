@@ -49,8 +49,7 @@ class Heap<T extends Comparable<T>> {
         changetoUp();
     }
 
-    public T delete
-            () throws NoSuchElementException {
+    public T delete() throws NoSuchElementException {
         if (binaryheap.size() == 0) {
             throw new NoSuchElementException();
         }
@@ -81,21 +80,21 @@ class Heap<T extends Comparable<T>> {
         System.out.println();
     }
     public static void main(String[] args) {
-        Heap<Integer> he = new Heap();
-        he.insert(16);
-        he.insert(9);
-        he.insert(11);
-        he.insert(10);
-        he.insert(13);
-        he.insert(31);
-        he.insert(19);
-        he.insert(2);
-        he.insert(50);
-        he.insert(23);
-        he.insert(102);
-        he.delete();
-        he.delete();
-        he.print();
+        Heap<Integer> heap = new Heap();
+        heap.insert(16);
+        heap.insert(9);
+        heap.insert(11);
+        heap.insert(10);
+        heap.insert(13);
+        heap.insert(31);
+        heap.insert(19);
+        heap.insert(2);
+        heap.insert(50);
+        heap.insert(23);
+        heap.insert(102);
+        heap.delete();
+        heap.delete();
+        heap.print();
 
     }
 }
